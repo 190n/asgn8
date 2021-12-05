@@ -1,7 +1,7 @@
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -Wpedantic -O2 -g
 LFLAGS =
-OBJS=grass.o bv.o
+OBJS=bv.o field.o grass.o
 
 all: grass
 
