@@ -8,6 +8,7 @@
 struct BitVector {
     uint32_t length;
     uint64_t *vector;
+    uint32_t writes;
 };
 
 //
@@ -34,6 +35,7 @@ BitVector *bv_create(uint32_t length) {
     // only set fields on v if malloc succeeded
     if (bv != NULL) {
         bv->length = length;
+        bv->writes = 0;
         // calculate number of bytes needed
         uint32_t units = length % 64 == 0 ? (length / 64) : (length / 64 + 1);
         // calloc initializes bytes to zero
@@ -77,6 +79,7 @@ bool bv_set_bit(BitVector *bv, uint32_t i) {
     if (i < bv->length) {
         uint64_t mask = 0x01 << BV_BIT(i);
         bv->vector[BV_UNIT(i)] |= mask;
+        bv->writes += 1;
         return true;
     } else {
         return false;
@@ -93,6 +96,7 @@ bool bv_clr_bit(BitVector *bv, uint32_t i) {
     if (i < bv->length) {
         uint64_t mask = ~(0x01 << BV_BIT(i));
         bv->vector[BV_UNIT(i)] &= mask;
+        bv->writes += 1;
         return true;
     } else {
         return false;
@@ -124,6 +128,7 @@ bool bv_get_bit(BitVector *bv, uint32_t i, bool *bit) {
 bool bv_set_64(BitVector *bv, uint32_t i) {
     if (i < bv->length) {
         bv->vector[BV_UNIT(i)] = ~0;
+        bv->writes += 1;
         return true;
     } else {
         return false;
@@ -139,10 +144,20 @@ bool bv_set_64(BitVector *bv, uint32_t i) {
 bool bv_clr_64(BitVector *bv, uint32_t i) {
     if (i < bv->length) {
         bv->vector[BV_UNIT(i)] = 0;
+        bv->writes += 1;
         return true;
     } else {
         return false;
     }
+}
+
+//
+// Get the number of writes that have been made to a BitVector.
+//
+// bv: pointer to the BitVector to inspect
+//
+uint32_t bv_writes(BitVector *bv) {
+    return bv->writes;
 }
 
 //

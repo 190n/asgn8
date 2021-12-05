@@ -21,4 +21,6 @@ bool bv_set_64(BitVector *bv, uint32_t i);
 
 bool bv_clr_64(BitVector *bv, uint32_t i);
 
+uint32_t bv_writes(BitVector *bv);
+
 void bv_print(BitVector *bv);
