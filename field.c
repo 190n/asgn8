@@ -110,9 +110,8 @@ void field_touch_sequential(Field *f, uint32_t max_iters, unsigned int seed) {
 void field_touch_wide(Field *f, uint32_t max_iters, unsigned int seed) {
     (void) seed;
 
-    uint32_t area = field_area(f),
-        necessary_iters = area % 64 == 0 ? (area / 64) : (area / 64 + 1),
-        end = MIN(max_iters, necessary_iters);
+    uint32_t area = field_area(f), necessary_iters = area % 64 == 0 ? (area / 64) : (area / 64 + 1),
+             end = MIN(max_iters, necessary_iters);
 
     for (uint32_t i = 0; i < end; i += 1) {
         bv_set_64(f->matrix, i * 64);

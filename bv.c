@@ -77,7 +77,7 @@ uint32_t bv_length(BitVector *bv) {
 //
 bool bv_set_bit(BitVector *bv, uint32_t i) {
     if (i < bv->length) {
-        uint64_t mask = (uint64_t)1 << BV_BIT(i);
+        uint64_t mask = (uint64_t) 1 << BV_BIT(i);
         bv->vector[BV_UNIT(i)] |= mask;
         bv->writes += 1;
         return true;
@@ -94,7 +94,7 @@ bool bv_set_bit(BitVector *bv, uint32_t i) {
 //
 bool bv_clr_bit(BitVector *bv, uint32_t i) {
     if (i < bv->length) {
-        uint64_t mask = ~((uint64_t)1 << BV_BIT(i));
+        uint64_t mask = ~((uint64_t) 1 << BV_BIT(i));
         bv->vector[BV_UNIT(i)] &= mask;
         bv->writes += 1;
         return true;
