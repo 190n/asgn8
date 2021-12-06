@@ -1,17 +1,9 @@
-#include "bv.h"
-
-#include <inttypes.h>
-#include <stdio.h>
+#include "field.h"
 
 int main(void) {
-    BitVector *bv = bv_create(96);
-    bv_set_64(bv, 64);
-    bv_set_64(bv, 0);
-    bv_clr_64(bv, 32);
-    bv_set_bit(bv, 5);
-    bv_clr_bit(bv, 93);
-    bv_print(bv);
-    printf("%" PRIu32 " writes\n", bv_writes(bv));
-    bv_delete(&bv);
+    Field *f = field_create(6);
+    field_touch_random(f, 4, 374);
+    field_print(f);
+    field_delete(&f);
     return 0;
 }
