@@ -98,7 +98,15 @@ int main(int argc, char **argv) {
             Field *f = field_create(size);
             ti.func(f, iters, seed);
             printf("%s:\n", ti.name);
-            field_print(f);
+            if (verbose) {
+                uint32_t count = field_count(f), writes = field_writes(f);
+                double efficiency = 100.0 * count / writes;
+                printf("  Touched blades:   %5" PRIu32 "\n", field_count(f));
+                printf("  BitVector writes: %5" PRIu32 "\n", field_writes(f));
+                printf("  Efficiency:       %8.2f%%\n", efficiency);
+            } else {
+                field_print(f);
+            }
             field_delete(&f);
         }
     }
