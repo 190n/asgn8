@@ -11,19 +11,21 @@ struct BitVector {
     uint32_t writes;
 };
 
+#define BITS_PER_UNIT 64
+
 //
 // Given the index of a bit, calculate which unit in a BitVector contains it.
 //
 // i: the bit index
 //
-#define BV_UNIT(i) ((i) / 64)
+#define BV_UNIT(i) ((i) / BITS_PER_UNIT)
 
 //
 // Given the index of a bit, calculate which bit it is in a unit (0-63).
 //
 // i: the bit index
 //
-#define BV_BIT(i) ((i) % 64)
+#define BV_BIT(i) ((i) % BITS_PER_UNIT)
 
 //
 // Allocate a new BitVector.
@@ -37,7 +39,8 @@ BitVector *bv_create(uint32_t length) {
         bv->length = length;
         bv->writes = 0;
         // calculate number of bytes needed
-        uint32_t units = length % 64 == 0 ? (length / 64) : (length / 64 + 1);
+        uint32_t units
+            = length % BITS_PER_UNIT == 0 ? (length / BITS_PER_UNIT) : (length / BITS_PER_UNIT + 1);
         // calloc initializes bytes to zero
         bv->vector = (uint64_t *) calloc(units, sizeof(uint64_t));
         // make sure that allocation succeeded too
