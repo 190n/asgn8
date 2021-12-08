@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define OPTIONS "aswrvhf:i:n:"
+#define OPTIONS "aswrvhi:n:S:"
 
 typedef void (*toucher_t)(Field *, uint32_t, unsigned int);
 typedef struct {
@@ -39,9 +39,9 @@ void print_usage(char *self) {
            "  -r           Test the random method.\n"
            "  -v           Show verbose statistics.\n"
            "  -h           Print this help information.\n"
-           "  -f size      Set the size of the field of grass (1-50, default: 10).\n"
            "  -i iters     Set the number of iterations to run (default: size^2).\n"
-           "  -n seed      Set the random seed for -r (default: 7566707).\n",
+           "  -n size      Set the size of the field of grass (1-50, default: 10).\n"
+           "  -S seed      Set the random seed for -r (default: 7566707).\n",
         self);
 }
 
@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
         case 'r': touchers_selected |= RANDOM; break;
         case 'v': verbose = true; break;
         case 'h': print_usage(argv[0]); return 1;
-        case 'f':
+        case 'n':
             size = strtoul(optarg, NULL, 10);
             if (size < 1 || size > 50) {
                 fprintf(
@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
             iters = strtoul(optarg, NULL, 10);
             overrode_iters = true;
             break;
-        case 'n': seed = strtoul(optarg, NULL, 10); break;
+        case 'S': seed = strtoul(optarg, NULL, 10); break;
         default: print_usage(argv[0]); return 1;
         }
     }
