@@ -105,9 +105,9 @@ int main(int argc, char **argv) {
             if (verbose) {
                 uint32_t count = field_count(f), writes = field_writes(f);
                 double efficiency = 100.0 * count / writes;
-                printf("  Touched blades:   %5" PRIu32 "\n", field_count(f));
-                printf("  BitVector writes: %5" PRIu32 "\n", field_writes(f));
-                printf("  Efficiency:       %8.2f%%\n", efficiency);
+                printf("  Touched blades:     %7" PRIu32 "\n", field_count(f));
+                printf("  BitVector writes:   %7" PRIu32 "\n", field_writes(f));
+                printf("  Efficiency:         %10.2f%%\n", efficiency);
             } else {
                 field_print(f);
             }
