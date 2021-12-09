@@ -1,7 +1,7 @@
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -O2 -g
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -O2 -g -I.
 LFLAGS =
-OBJS=bv.o field.o grass.o
+OBJS=src/bv.o src/field.o src/grass.o
 
 all: grass asgn8.pdf
 
@@ -12,7 +12,7 @@ asgn8.pdf: asgn8.tex
 	pdflatex asgn8.tex
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< -o $@
 
 tidy:
 	$(RM) $(OBJS) asgn8.aux asgn8.listing asgn8.log asgn8.out
