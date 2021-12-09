@@ -25,6 +25,10 @@ ToucherInfo touchers[] = {
     { "Random", RANDOM, field_touch_random },
 };
 
+#define DEFAULT_SEED 7566707
+#define DEFAULT_SIZE 10
+#define MAX_SIZE 1024
+
 void print_usage(char *self) {
     printf("SYNOPSIS\n"
            "  Compare different methods of touching grass.\n"
@@ -40,17 +44,17 @@ void print_usage(char *self) {
            "  -v           Show verbose statistics.\n"
            "  -h           Print this help information.\n"
            "  -i iters     Set the number of iterations to run (default: size^2).\n"
-           "  -n size      Set the size of the field of grass (1-50, default: 10).\n"
-           "  -S seed      Set the random seed for -r (default: 7566707).\n",
-        self);
+           "  -n size      Set the size of the field of grass (1-%d, default: %d).\n"
+           "  -S seed      Set the random seed for -r (default: %d).\n",
+        self, MAX_SIZE, DEFAULT_SIZE, DEFAULT_SEED);
 }
 
 int main(int argc, char **argv) {
     int opt = 0;
     uint32_t touchers_selected = 0;
     bool verbose = false, overrode_iters = false;
-    uint32_t size = 10, iters = 100;
-    unsigned int seed = 7566707;
+    uint32_t size = DEFAULT_SIZE, iters = DEFAULT_SIZE * DEFAULT_SIZE;
+    unsigned int seed = DEFAULT_SEED;
 
     if (argc == 1) {
         print_usage(argv[0]);
@@ -67,9 +71,9 @@ int main(int argc, char **argv) {
         case 'h': print_usage(argv[0]); return 1;
         case 'n':
             size = strtoul(optarg, NULL, 10);
-            if (size < 1 || size > 50) {
+            if (size < 1 || size > MAX_SIZE) {
                 fprintf(
-                    stderr, "%s: invalid size %" PRIu32 ". valid sizes are 1-50.\n", argv[0], size);
+                    stderr, "%s: invalid size %" PRIu32 ". valid sizes are 1-%d.\n", argv[0], size, MAX_SIZE);
                 return 1;
             }
             if (!overrode_iters) {
