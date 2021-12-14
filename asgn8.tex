@@ -274,7 +274,7 @@ If \texttt{i} is a valid index into the bit vector, store the indicated bit in \
 
 \underline{\texttt{bool bv\_set\_64(BitVector *bv, uint32\_t i)}}
 
-If  \texttt{i} is a valid index into the bit vector, set \emph{every bit in the 64-bit word containing \texttt{i}} to one and return \texttt{true}. For instance, if \texttt{i} is 185, set bits 128 through 191 (index 2 in the underlying array). Since the underlying array contains 64-bit integers, this can be done with a single assignment. If \texttt{i} is not a valid index, return \texttt{false}.
+If \texttt{i} is a valid index into the bit vector, set \emph{every bit in the 64-bit word containing \texttt{i}} to one and return \texttt{true}. For instance, if \texttt{i} is 185, set bits 128 through 191 (index 2 in the underlying array). Since the underlying array contains 64-bit integers, this can be done with a single assignment. If \texttt{i} is not a valid index, return \texttt{false}.
 \medskip
 
 \underline{\texttt{bool bv\_clr\_64(BitVector *bv, uint32\_t i)}}
@@ -290,6 +290,26 @@ Get the number of writes that have been performed on a bit vector. One write is 
 \underline{\texttt{void bv\_print(BitVector *bv)}}
 
 Print the contents of a bit vector. The format is up to you.
+
+\setlength{\parindent}{17pt}
+\setlength{\parskip}{0pt plus1pt}
+
+\subsection{Optional BitVector functions}
+
+\noindent
+If you so desire, implementing either one of these functions will let you improve the performance of \texttt{field\_count}. The header \texttt{bv\_extra.h} contains their signatures.
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\underline{\texttt{uint32\_t bv\_count(BitVector *bv)}}
+
+Returns the number of set bits in a bit vector.
+\medskip
+
+\underline{\texttt{bool bv\_get\_64(BitVector *bv, uint32\_t i, uint64\_t *word)}}
+
+If \texttt{i} is a valid index into the bit vector, store the word containing the indicated bit in \texttt{*word} and return \texttt{true}. For instance, if \texttt{i} equals 483, return the word containing bits 448 through 511. Otherwise, return \texttt{false}.
 
 \setlength{\parindent}{17pt}
 \setlength{\parskip}{0pt plus1pt}
@@ -478,6 +498,7 @@ Like previous ones, this assignment must be submitted via \texttt{git}. Send me 
 
 \begin{itemize}
     \item \href{https://github.com/nadavrot/memset_benchmark}{Fast Memset and Memcpy implementations}
+    \item \href{https://www.youtube.com/watch?v=bSkpMdDe4g4}{What Has My Compiler Done for Me Lately? Unbolting the Compiler's Lid}
     \item \href{https://www.youtube.com/watch?v=Tix4hb2K3mY}{how to touch grass (tutorial)}
     \item \href{https://techwritersblog.com/linux/create_an_empty_file_in_linux/}{Create an empty file in Linux}
     \item \href{https://www.youtube.com/watch?v=xyOc32abDQ8}{Among Drip (Music Video)}
