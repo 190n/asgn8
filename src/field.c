@@ -1,4 +1,5 @@
 #include "field.h"
+#include "bv_extra.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -63,15 +64,7 @@ uint32_t field_area(Field *f) {
 // f: pointer to the Field
 //
 uint32_t field_count(Field *f) {
-    uint32_t count = 0;
-    bool bit;
-    for (uint32_t i = 0; i < field_area(f); i += 1) {
-        bv_get_bit(f->matrix, i, &bit);
-        if (bit) {
-            count += 1;
-        }
-    }
-    return count;
+    return bv_count(f->matrix);
 }
 
 //
