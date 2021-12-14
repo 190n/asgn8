@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -O2 -g -I.
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -O2 -march=nehalem -I.
 LFLAGS =
 OBJS=src/bv.o src/field.o src/grass.o
 
