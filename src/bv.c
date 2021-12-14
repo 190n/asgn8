@@ -197,8 +197,9 @@ uint32_t bv_count(BitVector *bv) {
     for (uint32_t i = 0; i < len_units; i += 1) {
         uint64_t unit = bv->vector[i];
         if (i == len_units - 1 && bv->length % 64 != 0) {
-            // zero any extraneous bits
-            unit &= ((uint64_t) ~0) << (64 - (bv->length % 64));
+            // zero any extraneous bits (maybe set with bv_set_64)
+            uint64_t mask = ~0ul >> (64 - (bv->length % 64));
+            unit &= mask;
         }
 
         // adapted from code by Matt Godbolt
